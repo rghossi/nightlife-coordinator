@@ -7,7 +7,8 @@ const UserSchema = new Schema({
 	facebookId: { type: String, unique: true },
 	createdAt: { type: Date, default: Date.now },
 	email: String,
-	facebookToken: String
+	facebookToken: String,
+	going: [ String ]
 });
 
 export default Mongoose.model('User', UserSchema);
