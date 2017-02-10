@@ -4,7 +4,6 @@ import server from '../src/server';
 import User from '../src/models/user';
 
 chai.use(chaiHttp);
-process.env.NODE_ENV = 'test';
 const should = chai.should();
 
 describe('routes : users', () => {
@@ -61,43 +60,36 @@ describe('routes : users', () => {
   });
 
   describe('PUT /api/users/:userId', () => {
-	  it('should put a new place id in single user', (done) => {
+	  it('should replace going array in single user', (done) => {
 	  	let newUser = new User({
 	  		name: "Dummy User",
 	  		facebookId: "dummyid10191",
 	  		email: "dummy@dummy.com",
-	  		facebookToken: "473814728023-d32d1"
+	  		facebookToken: "473814728023-d32d1",
+	  		going: ["209eh10hd239-dj293j"]
 	  	});
-	  	let placeId = "209eh10hd239-dj293j";
 	  	newUser.save((err, user) => {
 	  		if (err) throw err;
-	  		User.findById(user._id, (err, user) => {
-	  			if (err) throw err;
-	  			let places = user.going || [];
-	  			places.push(placeId);
-	  			user.set('going', places);
-	  			user.save((err, user) => {
-	  				if (err) throw err;
-			  		chai.request(server)
-				    .put('/api/users/' + user._id)
-				    .send({placeId})
-				    .end((err, res) => {
-				    	if (err) throw err;
-				    	res.should.have.status(200);
-						res.should.be.json;
-						res.body.should.be.a('object');
-						res.body.should.have.property('_id');
-						res.body.should.have.property('name');
-						res.body.should.have.property('email');
-						res.body.should.have.property('facebookId');
-						res.body.should.have.property('going');
-						res.body.going.should.be.a('array');
-						res.body.going.should.equal([placeId]);
-						res.body._id.should.equal(user._id);
-						done();
-				    });
-	  			})
-	  		});
+  			let places = user.going;
+  			places.push("HAEUHAUHEUAHUEHAUAE");
+  			chai.request(server)
+		    .put('/api/users/' + user._id)
+		    .send({going: places})
+		    .end((err, res) => {
+		    	if (err) throw err;
+		    	res.should.have.status(200);
+				res.should.be.json;
+				res.body.should.be.a('object');
+				res.body.should.have.property('_id');
+				res.body.should.have.property('name');
+				res.body.should.have.property('email');
+				res.body.should.have.property('facebookId');
+				res.body.should.have.property('going');
+				res.body.going.should.be.a('array');
+				res.body.going.should.equal(places);
+				res.body._id.should.equal(user._id);
+				done();
+		    });
 	  	})
 	  });
 
@@ -114,7 +106,7 @@ describe('routes : users', () => {
 	    });
 	  });
 
-	  it('should return 400 for wrong placeId type', (done) => {
+	  it('should return 400 for wrong going field type', (done) => {
 	  	let newUser = new User({
 	  		name: "Dummy User",
 	  		facebookId: "dummyid10191",
@@ -124,7 +116,7 @@ describe('routes : users', () => {
 	  	newUser.save((err, user) => {
 	  		chai.request(server)
 		    .put('/api/users/' + user._id)
-		    .send({placeId: 12422})
+		    .send({going: 12422})
 		    .end((err, res) => {
 		    	if (err) throw err;
 		    	res.should.have.status(400);

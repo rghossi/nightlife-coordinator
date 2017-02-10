@@ -13,6 +13,8 @@ import Passport from 'passport';
 import { Strategy } from 'passport-facebook';
 import * as UserCtrl from './controllers/user.controller';
 
+Mongoose.Promise = require('bluebird');
+
 const facebookAuth = {};
 if (process.env.NODE_ENV !== "production") {
   var configAuth = require('./config/auth');
