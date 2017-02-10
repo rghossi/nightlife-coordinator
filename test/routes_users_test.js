@@ -15,7 +15,7 @@ describe('routes : users', () => {
 	});
   });
 
-  describe('GET /api/users/:userId', () => {
+  describe('GET /api/users/:id', () => {
 	  it('should GET a single user', (done) => {
 	  	var newUser = new User({
 	  		name: "Dummy User",
@@ -28,6 +28,7 @@ describe('routes : users', () => {
 	  		chai.request(server)
 		    .get('/api/users/' + user._id)
 		    .end((err, res) => {
+		    	console.log(typeof res.body._id, typeof user._id);
 		    	if (err) throw err;
 		    	res.should.have.status(200);
 				res.should.be.json;
@@ -39,18 +40,29 @@ describe('routes : users', () => {
 				res.body.should.have.property('going');
 				res.body.name.should.equal('Dummy User');
 				res.body.email.should.equal('dummy@dummy.com');
-				res.body._id.should.equal(user._id);
+				res.body._id.should.equal(user._id.toString());
 				done();
 		    });
 	  	})
 	  });
 
-	  it('should return 404 for invalid id', (done) => {
+	  it('should return 404 for inexistent id', (done) => {
+	  	chai.request(server)
+	    .get('/api/users/539e1188acf9bd185dac729c')
+	    .end((err, res) => {
+	    	res.should.have.status(404);
+			res.should.be.json;
+			res.body.should.be.a('object');
+			res.body.should.have.property('message');
+			done();
+	    });
+	  });
+
+	  it('should return 400 for invalid id', (done) => {
 	  	chai.request(server)
 	    .get('/api/users/invalidId')
 	    .end((err, res) => {
-	    	if (err) throw err;
-	    	res.should.have.status(404);
+	    	res.should.have.status(400);
 			res.should.be.json;
 			res.body.should.be.a('object');
 			res.body.should.have.property('message');

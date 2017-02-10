@@ -1,6 +1,18 @@
 import User from '../models/user';
 
-//handle user routes
+export function getUser(req, res) {
+    User.findById(req.params.id, (err, user) => {
+        if (err && err.name === 'CastError'){
+            res.status(400).send({message: "Invalid user id!"});
+        } else if (err){
+            throw err;
+        } else {
+            if (!user) res.status(404).send({message: "User not found"});
+            else res.json(user);
+        }
+    })
+}
+
 export function logout(req, res) {
 	req.logout();
 	res.redirect('/');
