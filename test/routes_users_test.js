@@ -98,19 +98,18 @@ describe('routes : users', () => {
 				res.body.should.have.property('facebookId');
 				res.body.should.have.property('going');
 				res.body.going.should.be.a('array');
-				res.body.going.should.equal(places);
-				res.body._id.should.equal(user._id);
+				res.body.going.should.have.lengthOf(2);
+				res.body._id.should.equal(user._id.toString());
 				done();
 		    });
 	  	})
 	  });
 
-	  it('should return 404 for invalid user', (done) => {
+	  it('should return 400 for invalid user', (done) => {
 	  	chai.request(server)
 	    .put('/api/users/invalidId')
 	    .end((err, res) => {
-	    	if (err) throw err;
-	    	res.should.have.status(404);
+	    	res.should.have.status(400);
 			res.should.be.json;
 			res.body.should.be.a('object');
 			res.body.should.have.property('message');
@@ -130,7 +129,6 @@ describe('routes : users', () => {
 		    .put('/api/users/' + user._id)
 		    .send({going: 12422})
 		    .end((err, res) => {
-		    	if (err) throw err;
 		    	res.should.have.status(400);
 				res.should.be.json;
 				res.body.should.be.a('object');

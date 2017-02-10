@@ -5,6 +5,7 @@ import * as UserController from './controllers/user.controller';
 const router = new Router();
 
 router.get("/users/:id", UserController.getUser);
+router.put("/users/:id", UserController.updateUser);
 
 router.get("/login", Passport.authenticate('facebook', { scope : 'email' }));
 router.get("/logout", UserController.logout);
