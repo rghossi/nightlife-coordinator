@@ -12,7 +12,6 @@ import BodyParser from 'body-parser';
 import Passport from 'passport';
 import { Strategy } from 'passport-facebook';
 import * as UserCtrl from './controllers/user.controller';
-import webpackDevHelper from './index.dev.js';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore'
 
@@ -54,6 +53,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 if (process.env.NODE_ENV !== 'production') {
+  const webpackDevHelper = require('./index.dev.js');
   console.log('DEVOLOPMENT ENVIRONMENT: Turning on WebPack Middleware...');
   webpackDevHelper.useWebpackMiddleware(app);
 } else {
