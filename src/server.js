@@ -12,6 +12,7 @@ import BodyParser from 'body-parser';
 import Passport from 'passport';
 import { Strategy } from 'passport-facebook';
 import * as UserCtrl from './controllers/user.controller';
+import webpackDevHelper from './index.dev.js';
 
 Mongoose.Promise = require('bluebird');
 
@@ -50,7 +51,13 @@ Passport.deserializeUser(UserCtrl.deserialize);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(Express.static(path.join(__dirname, 'static')));
+if (process.env.NODE_ENV !== 'production') {
+  console.log('DEVOLOPMENT ENVIRONMENT: Turning on WebPack Middleware...');
+  webpackDevHelper.useWebpackMiddleware(app);
+} else {
+  app.use(Express.static(path.join(__dirname, 'static')));
+}
+
 app.use(BodyParser.json());
 app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
 app.use(Passport.initialize());
