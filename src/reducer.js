@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-  SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES, LOGIN_REQUEST, RECEIVE_LOGIN_STATUS
+  SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES, LOGIN_REQUEST, RECEIVE_LOGIN_STATUS, LOGOUT_REQUEST, RECEIVE_LOGOUT_STATUS
 } from './actions'
 
 export function selectedLocation(state = '', action) {
@@ -46,6 +46,17 @@ export function auth(state = {
         isAuthenticated: false
       })
     case RECEIVE_LOGIN_STATUS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user
+      })
+    case LOGOUT_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: true
+      })
+    case RECEIVE_LOGOUT_STATUS:
       return Object.assign({}, state, {
         isFetching: false,
         isAuthenticated: action.isAuthenticated,

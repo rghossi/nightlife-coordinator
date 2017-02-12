@@ -36,7 +36,7 @@ export function getUser(req, res) {
 
 export function logout(req, res) {
 	req.logout();
-	res.redirect('/');
+	res.json({isAuthenticated: false, user: undefined});
 }
 
 export function facebookCallback(accessToken, refreshToken, profile, cb) {
