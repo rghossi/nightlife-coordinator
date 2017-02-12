@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 import {
-  SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES
+  SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES, LOGIN_REQUEST, RECEIVE_LOGIN_STATUS
 } from './actions'
 
 export function selectedLocation(state = '', action) {
@@ -35,6 +35,27 @@ export function places(state = {
   }
 }
 
+export function auth(state = {
+    isFetching: false,
+    isAuthenticated: false
+  }, action) {
+  switch (action.type) {
+    case LOGIN_REQUEST:
+      return Object.assign({}, state, {
+        isFetching: true,
+        isAuthenticated: false
+      })
+    case RECEIVE_LOGIN_STATUS:
+      return Object.assign({}, state, {
+        isFetching: false,
+        isAuthenticated: action.isAuthenticated,
+        user: action.user
+      })
+    default:
+      return state;
+  }
+}
+
 function placesNearLocation(state = {}, action) {
   switch (action.type) {
     case REQUEST_PLACES:
@@ -48,7 +69,8 @@ function placesNearLocation(state = {}, action) {
 
 const rootReducer = combineReducers({
   placesNearLocation,
-  selectedLocation
+  selectedLocation,
+  auth
 })
 
 export default rootReducer

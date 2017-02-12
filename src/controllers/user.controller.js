@@ -70,3 +70,11 @@ export function deserialize(id, cb){
         cb(err, user);
     })
 }
+
+export function isLoggedIn(req, res) {
+    if (req.session.passport){
+        res.json({userId: req.session.passport.user, isAuthenticated: req.isAuthenticated()});
+    } else {
+        res.json({isAuthenticated: req.isAuthenticated()});
+    }
+}

@@ -16,6 +16,8 @@ import { Provider } from 'react-redux';
 import configureStore from './configureStore'
 
 Mongoose.Promise = require('bluebird');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const facebookAuth = {};
 if (process.env.NODE_ENV !== "production") {
@@ -61,7 +63,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 app.use(BodyParser.json());
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, store: new MongoStore({mongooseConnection: db}) }));
 app.use(Passport.initialize());
 app.use(Passport.session());
 app.use('/api', apiRoutes);

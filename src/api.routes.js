@@ -7,6 +7,7 @@ const router = new Router();
 router.get("/users/:id", UserController.getUser);
 router.put("/users/:id", UserController.updateUser);
 
+router.get("/isLoggedIn", UserController.isLoggedIn);
 router.get("/login", Passport.authenticate('facebook', { scope : 'email' }));
 router.get("/logout", UserController.logout);
 router.get("/login/facebook/return*", Passport.authenticate('facebook', {
