@@ -13,6 +13,8 @@ import Passport from 'passport';
 import { Strategy } from 'passport-facebook';
 import * as UserCtrl from './controllers/user.controller';
 import webpackDevHelper from './index.dev.js';
+import { Provider } from 'react-redux';
+import configureStore from './configureStore'
 
 Mongoose.Promise = require('bluebird');
 
@@ -78,8 +80,13 @@ app.get('*', (req, res) => {
       }
 
       let markup;
+      const store = configureStore();
       if (renderProps) {
-        markup = renderToString(<RouterContext {...renderProps}/>);
+        markup = renderToString(
+          <Provider store={store}>
+            <RouterContext {...renderProps}/>
+          </Provider>
+        );
       } else {
         markup = renderToString(<NotFoundPage/>);
         res.status(404);
