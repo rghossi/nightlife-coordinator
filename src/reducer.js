@@ -3,7 +3,7 @@ import {
   SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES
 } from './actions'
 
-export function selectedLocation(state = 'New York, New York', action) {
+export function selectedLocation(state = '', action) {
   switch (action.type) {
   case SELECT_LOCATION:
     return action.location

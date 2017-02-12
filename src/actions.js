@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 
 export const SELECT_LOCATION = 'SELECT_LOCATION'
-function selectLocation(location) {
+export function selectLocation(location) {
   return {
     type: SELECT_LOCATION,
     location
@@ -9,7 +9,7 @@ function selectLocation(location) {
 }
 
 export const REQUEST_PLACES = 'REQUEST_PLACES'
-function requestPlaces(location) {
+export function requestPlaces(location) {
   return {
     type: REQUEST_PLACES,
     location
@@ -17,7 +17,7 @@ function requestPlaces(location) {
 }
 
 export const RECEIVE_PLACES = 'RECEIVE_PLACES'
-function receivePlaces(location, json) {
+export function receivePlaces(location, json) {
   return {
     type: RECEIVE_PLACES,
     location,
