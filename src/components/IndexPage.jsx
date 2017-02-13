@@ -33,7 +33,7 @@ class IndexPage extends Component {
 				    </FormGroup>
 			    </form>
 			    <ul>
-		    		{items.map((item) => <li key={item.id}>{item.name}</li>)}
+		    		{items && items.map((item) => <li key={item.id}>{item.name}</li>)}
 		    	</ul>
 		    </div>
 		)
