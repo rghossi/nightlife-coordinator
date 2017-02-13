@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { selectLocation, fetchPlaces } from '../actions';
-
+import Loader from 'react-loader';
 
 class IndexPage extends Component {
 	constructor(props) {
@@ -30,7 +30,7 @@ class IndexPage extends Component {
 	}
 
 	render() {
-		const { selectedLocation, items } = this.props
+		const { selectedLocation, items, isFetching } = this.props
 		console.log(this.props);
 		return (
 			<div>
@@ -44,10 +44,12 @@ class IndexPage extends Component {
 				      </InputGroup>
 				    </FormGroup>
 			    </form>
-			    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
-			    <ul>
-		    		{items && items.map((item) => <li key={item.id}>{item.name}</li>)}
-		    	</ul>
+			    <Loader loaded={!isFetching}>
+				    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
+				    <ul>
+			    		{items && items.map((item) => <li key={item.id}>{item.name}</li>)}
+			    	</ul>
+		    	</Loader>
 		    </div>
 		)
 	}
