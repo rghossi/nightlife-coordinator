@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { Grid, Navbar } from 'react-bootstrap';
+import { Grid, Navbar, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { isLoggedIn, logout } from '../actions';
 
@@ -45,9 +45,13 @@ class Layout extends React.Component {
         </Grid>
         <footer className="footer">
           <Grid>
+            <Row>
             <p className="text-muted">
-              Demo SPA to showcase <strong>React</strong>, <strong>Node</strong>, <strong>Express</strong> and <strong>MongoDB</strong>.
+              Demo SPA to showcase <strong>React</strong>, <strong>Redux</strong>, <strong>Node</strong>, <strong>Express</strong> and <strong>MongoDB</strong>.
+              <span className="pull-right"><small><a className="google-link" target='_blank' href="https://www.google.com/intl/en/policies/terms/">Google Terms of Service</a><a className="google-link" target='_blank' href="https://www.google.com/policies/privacy/">Google Privacy Policy</a></small>
+              <img src="https://developers.google.com/places/documentation/images/powered-by-google-on-white.png" alt="Powered by Google"/></span>
             </p>
+            </Row>
           </Grid>
         </footer>
       </div>
