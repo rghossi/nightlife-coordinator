@@ -7,6 +7,9 @@ import { isLoggedIn, logout } from '../actions';
 class Layout extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      loaded: false
+    }
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -19,10 +22,11 @@ class Layout extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch(isLoggedIn());
+    this.setState({loaded: true});
   }
 
   render() {
-    const { dispatch, isAuthenticated, user } = this.props
+    const { dispatch, isAuthenticated, user, isFetching } = this.props
     return (
       <div>
         <Navbar>
@@ -31,8 +35,8 @@ class Layout extends React.Component {
               <Link to="/">Nightlife Coordinator App</Link>
             </Navbar.Brand>
             <Navbar.Brand>
-              {!isAuthenticated && <a href="/api/login">Login</a>}
-              {isAuthenticated && <a href="" onClick={this.handleLogout}>Logout</a>}
+              {this.state.loaded && !isFetching && !isAuthenticated && <a href="/api/login">Login</a>}
+              {this.state.loaded && !isFetching && isAuthenticated && <a href="" onClick={this.handleLogout}>Logout</a>}
             </Navbar.Brand>
           </Navbar.Header>
         </Navbar>
