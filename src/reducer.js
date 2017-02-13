@@ -27,7 +27,7 @@ export function places(state = {
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.places,
+        items: action.items,
         lastUpdated: action.receivedAt
       })
     default:
@@ -67,19 +67,8 @@ export function auth(state = {
   }
 }
 
-function placesNearLocation(state = {}, action) {
-  switch (action.type) {
-    case REQUEST_PLACES:
-      return Object.assign({}, state, {
-        [action.location]: places(state[action.location], action)
-      })
-    default:
-      return state
-  }
-}
-
 const rootReducer = combineReducers({
-  placesNearLocation,
+  places,
   selectedLocation,
   auth
 })
