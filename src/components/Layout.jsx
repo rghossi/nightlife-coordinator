@@ -2,9 +2,19 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import { Grid, Navbar } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { isLoggedIn } from '../actions';
+import { isLoggedIn, logout } from '../actions';
 
 class Layout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  handleLogout(e) {
+    e.preventDefault();
+    const { dispatch } = this.props
+    dispatch(logout());
+  }
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -22,7 +32,7 @@ class Layout extends React.Component {
             </Navbar.Brand>
             <Navbar.Brand>
               {!isAuthenticated && <a href="/api/login">Login</a>}
-              {isAuthenticated && <a href="/api/logout">Logout</a>}
+              {isAuthenticated && <a href="" onClick={this.handleLogout}>Logout</a>}
             </Navbar.Brand>
           </Navbar.Header>
         </Navbar>
