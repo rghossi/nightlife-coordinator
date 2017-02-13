@@ -13,8 +13,20 @@ class IndexPage extends Component {
 	handleSearch(e) {
 		e.preventDefault();
 		const { dispatch } = this.props
-		dispatch(selectLocation(this.input.value));
-		dispatch(fetchPlaces(this.input.value));
+		const location = this.input.value;
+		dispatch(selectLocation(location));
+		localStorage.setItem("location", location);
+		dispatch(fetchPlaces(location));
+	}
+
+	componentDidMount() {
+		const { dispatch, selectedLocation } = this.props
+		const location = localStorage.getItem("location");
+		console.log(location, selectedLocation);
+		if (location && location !== selectedLocation) {
+			dispatch(selectLocation(location));
+			dispatch(fetchPlaces(location));
+		}
 	}
 
 	render() {
@@ -32,6 +44,7 @@ class IndexPage extends Component {
 				      </InputGroup>
 				    </FormGroup>
 			    </form>
+			    <h4>Displaying results for "{selectedLocation}"</h4>
 			    <ul>
 		    		{items && items.map((item) => <li key={item.id}>{item.name}</li>)}
 		    	</ul>
