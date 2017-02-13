@@ -44,7 +44,7 @@ class IndexPage extends Component {
 				      </InputGroup>
 				    </FormGroup>
 			    </form>
-			    <h4>Displaying results for "{selectedLocation}"</h4>
+			    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
 			    <ul>
 		    		{items && items.map((item) => <li key={item.id}>{item.name}</li>)}
 		    	</ul>
