@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { FormGroup, InputGroup, FormControl, Button } from 'react-bootstrap';
+import { FormGroup, InputGroup, FormControl, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { selectLocation, fetchPlaces } from '../actions';
 import Loader from 'react-loader';
+import PlacePreview from './PlacePreview';
 
 class IndexPage extends Component {
 	constructor(props) {
@@ -46,9 +47,9 @@ class IndexPage extends Component {
 			    </form>
 			    <Loader loaded={!isFetching}>
 				    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
-				    <ul>
-			    		{items && items.map((item) => <li key={item.id}>{item.name}</li>)}
-			    	</ul>
+				    <ListGroup>
+			    		{items && items.map((item) => <ListGroupItem className="list-item" key={item.id}><PlacePreview key={item.id} item={item} /></ListGroupItem>)}
+			    	</ListGroup>
 		    	</Loader>
 		    </div>
 		)
