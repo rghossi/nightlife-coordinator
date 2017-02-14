@@ -7,7 +7,6 @@ export default class PlacePreview extends Component {
 		let index = -1
 		if (user && user.going)
 			index = user.going.indexOf(item.place_id);
-		console.log(user);
 		return (
 			<Media>
 		      <Media.Left align="middle">

@@ -73,7 +73,12 @@ export function deserialize(id, cb){
 
 export function isLoggedIn(req, res) {
     if (req.session.passport){
-        res.json({userId: req.session.passport.user, isAuthenticated: req.isAuthenticated()});
+        User.findById(req.session.passport.user, (err, user) => {
+            if (err) throw err;
+            if (!user) res.status(404).send("User not found!");
+            else res.json({user: user, isAuthenticated: req.isAuthenticated()});
+        })
+        
     } else {
         res.json({isAuthenticated: req.isAuthenticated()});
     }

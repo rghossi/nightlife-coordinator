@@ -56,7 +56,7 @@ function receiveLogin(json) {
     type: RECEIVE_LOGIN_STATUS,
     isFetching: false,
     isAuthenticated: json.isAuthenticated,
-    user: json.userId
+    user: json.user
   }
 }
 
