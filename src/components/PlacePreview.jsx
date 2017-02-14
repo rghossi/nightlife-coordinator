@@ -3,7 +3,11 @@ import { Media, Button } from 'react-bootstrap';
 
 export default class PlacePreview extends Component {
 	render() {
-		const {item} = this.props
+		const { item, user } = this.props
+		let index = -1
+		if (user && user.going)
+			index = user.going.indexOf(item.place_id);
+		console.log(user);
 		return (
 			<Media>
 		      <Media.Left align="middle">
@@ -11,8 +15,9 @@ export default class PlacePreview extends Component {
 		      </Media.Left>
 		      <Media.Body>
 		        <Media.Heading>{item.name}</Media.Heading>
-			        <p>{item.formatted_address}</p>
-			        <Button bsStyle="primary">Going</Button>
+			    <p>{item.formatted_address}</p>
+			    {user && index === -1 && <Button bsStyle="primary">I wanna go</Button>}
+			    {user && index > -1 && <Button bsStyle="warning">Changed your mind? Click here</Button>}
 		      </Media.Body>
 		    </Media>
 		)

@@ -31,7 +31,7 @@ class IndexPage extends Component {
 	}
 
 	render() {
-		const { selectedLocation, items, isFetching } = this.props
+		const { selectedLocation, items, isFetching, user } = this.props
 		console.log(this.props);
 		return (
 			<div>
@@ -48,7 +48,7 @@ class IndexPage extends Component {
 			    <Loader loaded={!isFetching}>
 				    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
 				    <ListGroup>
-			    		{items && items.map((item) => <ListGroupItem className="list-item" key={item.id}><PlacePreview key={item.id} item={item} /></ListGroupItem>)}
+			    		{items && items.map((item) => <ListGroupItem className="list-item" key={item.id}><PlacePreview key={item.id} item={item} user={user}/></ListGroupItem>)}
 			    	</ListGroup>
 		    	</Loader>
 		    </div>
@@ -65,20 +65,22 @@ IndexPage.propTypes = {
 }
 
 function mapStateToProps(state) {
-  const { selectedLocation, places } = state
+  const { selectedLocation, places, auth } = state
   const {
     isFetching,
     lastUpdated,
     didInvalidate,
     items
   } = places
+  const { user } = auth
 
   return {
     selectedLocation,
     places,
     isFetching,
     lastUpdated,
-    items
+    items,
+    user
   }
 }
 
