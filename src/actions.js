@@ -7,6 +7,8 @@ export const LOGIN_REQUEST = 'LOGIN_REQUEST'
 export const RECEIVE_LOGIN_STATUS = 'RECEIVE_LOGIN_STATUS'
 export const LOGOUT_REQUEST = 'LOGOUT_REQUEST'
 export const RECEIVE_LOGOUT_STATUS = 'RECEIVE_LOGOUT_STATUS'
+export const REQUEST_UPDATE_GOING_PLACES = 'REQUEST_UPDATE_GOING_PLACES'
+export const RECEIVE_UPDATE_GOING_PLACES = 'RECEIVE_UPDATE_GOING_PLACES'
 
 export function selectLocation(location) {
   return {
@@ -95,6 +97,38 @@ export function isLoggedIn() {
       .then(response => response.json())
       .then(json =>
         dispatch(receiveLogin(json))
+      )
+  }
+}
+
+function requestUpdateGoingPlaces() {
+  return {
+    type: REQUEST_UPDATE_GOING_PLACES,
+    isFetching: true,
+    isAuthenticated: true
+  }
+}
+
+function receiveUpdateGoingPlaces(user) {
+  return {
+    type: RECEIVE_UPDATE_GOING_PLACES,
+    isFetching: false,
+    isAuthenticated: true,
+    user: json
+  }
+}
+
+export function updateUser(user) {
+  return function (dispatch) {
+    dispatch(requestUpdateGoingPlaces());
+    return fetch("/api/users/" + user._id, {
+        credentials: 'same-origin',
+        method: 'PUT',
+        body: Json.stringify({going: user.going})
+      })
+      .then(response => response.json())
+      .then(json =>
+        dispatch(receiveUpdateGoingPlaces(json))
       )
   }
 }
