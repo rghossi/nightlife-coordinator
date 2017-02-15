@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { FormGroup, InputGroup, FormControl, Button, ListGroup, ListGroupItem } from 'react-bootstrap';
-import { selectLocation, fetchPlaces } from '../actions';
+import { selectLocation, fetchPlaces, updateUser } from '../actions';
 import Loader from 'react-loader';
 import PlacePreview from './PlacePreview';
 
@@ -9,6 +9,7 @@ class IndexPage extends Component {
 	constructor(props) {
 		super(props);
 		this.handleSearch = this.handleSearch.bind(this);
+		this.handleButtonClick = this.handleButtonClick.bind(this);
 	}
 
 	handleSearch(e) {
@@ -18,6 +19,19 @@ class IndexPage extends Component {
 		dispatch(selectLocation(location));
 		localStorage.setItem("location", location);
 		dispatch(fetchPlaces(location));
+	}
+
+	handleButtonClick(locationId) {
+		const { user, dispatch } = this.props
+		let newGoingArray = user.going.slice(0) || [];
+		const index = newGoingArray.indexOf(locationId);
+		if (index > -1)
+			newGoingArray.splice(index, 1);
+		else
+			newGoingArray.push(locationId);
+		user.going = newGoingArray;
+		console.log(user);
+		dispatch(updateUser(user));
 	}
 
 	componentDidMount() {
@@ -48,7 +62,7 @@ class IndexPage extends Component {
 			    <Loader loaded={!isFetching}>
 				    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
 				    <ListGroup>
-			    		{items && items.map((item) => <ListGroupItem className="list-item" key={item.id}><PlacePreview key={item.id} item={item} user={user}/></ListGroupItem>)}
+			    		{items && items.map((item) => <ListGroupItem className="list-item" key={item.id}><PlacePreview key={item.id} item={item} user={user} handleButtonClick={this.handleButtonClick} /></ListGroupItem>)}
 			    	</ListGroup>
 		    	</Loader>
 		    </div>

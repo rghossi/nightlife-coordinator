@@ -114,7 +114,7 @@ function receiveUpdateGoingPlaces(user) {
     type: RECEIVE_UPDATE_GOING_PLACES,
     isFetching: false,
     isAuthenticated: true,
-    user: json
+    user: user
   }
 }
 
@@ -124,7 +124,10 @@ export function updateUser(user) {
     return fetch("/api/users/" + user._id, {
         credentials: 'same-origin',
         method: 'PUT',
-        body: Json.stringify({going: user.going})
+        headers: {  
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(user)
       })
       .then(response => response.json())
       .then(json =>

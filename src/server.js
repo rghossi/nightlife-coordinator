@@ -62,6 +62,7 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(Express.static(path.join(__dirname, 'static')));
 }
 
+app.use(BodyParser.urlencoded({ extended: true }));
 app.use(BodyParser.json());
 app.use(session({ secret: 'keyboard cat', resave: true, saveUninitialized: true, store: new MongoStore({mongooseConnection: db}) }));
 app.use(Passport.initialize());
