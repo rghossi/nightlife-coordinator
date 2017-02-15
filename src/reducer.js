@@ -1,7 +1,24 @@
 import { combineReducers } from 'redux'
 import {
-  SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES, LOGIN_REQUEST, RECEIVE_LOGIN_STATUS, LOGOUT_REQUEST, RECEIVE_LOGOUT_STATUS
+  SELECT_LOCATION, REQUEST_PLACES, RECEIVE_PLACES, LOGIN_REQUEST, RECEIVE_LOGIN_STATUS, LOGOUT_REQUEST, RECEIVE_LOGOUT_STATUS, REQUEST_UPDATE_GOING_PLACES, RECEIVE_UPDATE_GOING_PLACES
 } from './actions'
+
+export function goingPlaces(state, action) {
+  switch (action.type) {
+  case REQUEST_UPDATE_GOING_PLACES:
+    return Object.assign({}, state, {
+        isFetching: true,
+        didInvalidate: false
+      })
+  case RECEIVE_UPDATE_GOING_PLACES:
+    return Object.assign({}, state, {
+        isFetching: true,
+        user: action.user
+      })
+  default:
+    return state
+  }
+}
 
 export function selectedLocation(state = '', action) {
   switch (action.type) {
