@@ -33,14 +33,12 @@ class IndexPage extends Component {
 		else
 			newGoingArray.push(locationId);
 		user.going = newGoingArray;
-		console.log(user);
 		dispatch(updateUser(user));
 	}
 
 	componentDidMount() {
 		const { dispatch, selectedLocation } = this.props
 		const location = localStorage.getItem("location");
-		console.log(location, selectedLocation);
 		if (location && location !== selectedLocation) {
 			dispatch(selectLocation(location));
 			dispatch(fetchPlaces(location));
@@ -55,7 +53,6 @@ class IndexPage extends Component {
 
 	render() {
 		const { selectedLocation, items, isFetching, user } = this.props
-		console.log(this.props);
 		return (
 			<div>
 				<Loader loaded={this.state.loaded}>
