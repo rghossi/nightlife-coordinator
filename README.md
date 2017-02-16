@@ -10,6 +10,8 @@ It was built using Node, MongoDB, React (+ react-hot-loader), Redux, Express and
 
 ## Pre Running Instructions
 
+### Facebook Auth
+
 In order to use facebook authentication, you have to create a new app at [Facebook Developers](https://developers.facebook.com/docs/apps/register).
 
 Then create the following file to store all sensitive data.
@@ -30,9 +32,26 @@ module.exports = {
 An alternative is to set the following environment variables if you are running in production:
 
 ```
-clientID = 'YOUR_APP_ID'
-clientSecret = 'YOUR_APP_SECRET'
-callbackURL = 'FACEBOOK_CALLBACK_URL'
+clientID='YOUR_APP_ID'
+clientSecret='YOUR_APP_SECRET'
+callbackURL='FACEBOOK_CALLBACK_URL'
+```
+
+### Google Search API
+
+This app is using google custom search API to retrieve bars and you should get an API key in order to be able to use it.
+
+Go to [Google Developers Console](https://console.developers.google.com/?pli=1), get a key for your application and enable the place search api in this key. Then create the following file to store you key.
+
+```
+//src/config/googleSearchApi.js
+module.exports.key = "YOUR_GOOGLE_API_KEY";
+```
+
+If you are running in production, use an environment variable instead:
+
+```
+GOOGLE_SEARCH_KEY="YOUR_GOOGLE_API_KEY"
 ```
 
 And that's it! You're all set to run the application.
