@@ -8,6 +8,9 @@ import PlacePreview from './PlacePreview';
 class IndexPage extends Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			loaded: false
+		}
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleButtonClick = this.handleButtonClick.bind(this);
 	}
@@ -41,7 +44,13 @@ class IndexPage extends Component {
 		if (location && location !== selectedLocation) {
 			dispatch(selectLocation(location));
 			dispatch(fetchPlaces(location));
+		} else {
+			this.setState({loaded: true});
 		}
+	}
+
+	componentDidUpdate() {
+		this.setState({loaded: true});
 	}
 
 	render() {
@@ -49,16 +58,18 @@ class IndexPage extends Component {
 		console.log(this.props);
 		return (
 			<div>
-				<form onSubmit={this.handleSearch}>
-				    <FormGroup>
-				      <InputGroup>
-				      	<FormControl inputRef={(input) => this.input = input} defaultValue={selectedLocation} type="text" placeholder="Enter your location" />
-				        <InputGroup.Button>
-				          <Button type="submit">Search</Button>
-				        </InputGroup.Button>
-				      </InputGroup>
-				    </FormGroup>
-			    </form>
+				<Loader loaded={this.state.loaded}>
+					<form onSubmit={this.handleSearch}>
+					    <FormGroup>
+					      <InputGroup>
+					      	<FormControl inputRef={(input) => this.input = input} defaultValue={selectedLocation} type="text" placeholder="Enter your location" />
+					        <InputGroup.Button>
+					          <Button type="submit">Search</Button>
+					        </InputGroup.Button>
+					      </InputGroup>
+					    </FormGroup>
+				    </form>
+			    </Loader>
 			    <Loader loaded={!isFetching}>
 				    {selectedLocation && <h4>Displaying results for "{selectedLocation}"</h4>}
 				    <ListGroup>
