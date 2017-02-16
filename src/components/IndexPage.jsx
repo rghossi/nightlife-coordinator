@@ -37,18 +37,13 @@ class IndexPage extends Component {
 	}
 
 	componentDidMount() {
+		this.setState({loaded: true});
 		const { dispatch, selectedLocation } = this.props
 		const location = localStorage.getItem("location");
 		if (location && location !== selectedLocation) {
 			dispatch(selectLocation(location));
 			dispatch(fetchPlaces(location));
-		} else {
-			this.setState({loaded: true});
 		}
-	}
-
-	componentDidUpdate() {
-		this.setState({loaded: true});
 	}
 
 	render() {
