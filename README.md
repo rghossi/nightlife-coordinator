@@ -8,6 +8,13 @@ This is a [freeCodeCamp](https://www.freecodecamp.com/challenges/build-a-nightli
 
 It was built using Node, MongoDB, React (+ react-hot-loader), Redux, Express and facebook authentication (amonth other common packages as you can see in the `package.json` file).
 
+## Basic/required Features
+
+* As an unauthenticated user, I can view all bars in my area.
+* As an authenticated user, I can add myself to a bar to indicate I am going there tonight.
+* As an authenticated user, I can remove myself from a bar if I no longer want to go there.
+* As an unauthenticated user, when I login I should not have to search again.
+
 ## Pre Running Instructions
 
 ### Facebook Auth
@@ -60,9 +67,9 @@ And that's it! You're all set to run the application.
 
 Firsts things first, run `npm install` to get all packages needed (it might take a while).
 
-1nd terminal tab: `sudo mongod` (make sure you already have mongodb installed)
+1st terminal tab: `sudo mongod` (make sure you already have mongodb installed)
 
-2rd terminal tab: `npm run dev`
+2nd terminal tab: `npm run dev`
 
 Then, just open your browser at `http://localhost:3000`
 
